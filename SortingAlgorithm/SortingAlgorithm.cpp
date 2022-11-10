@@ -1,43 +1,35 @@
-﻿// C++ implementation of Shell Sort
-#include <iostream>
+// C++ program for implementation of Bubble sort
+#include <bits/stdc++.h>
 using namespace std;
-
-int shellSort(int arr[], int n)
+ 
+// A function to implement bubble sort
+void bubbleSort(int arr[], int n)
 {
-	for (int gap = n / 2; gap > 0; gap /= 2)
-	{
-		for (int i = gap; i < n; i += 1)
-		{
-			int temp = arr[i];
-			
-			int j;
-			for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
-				arr[j] = arr[j - gap];
-			
-			arr[j] = temp;
-		}
-	}
-	return 0;
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+ 
+        // Last i elements are already in place
+        for (j = 0; j < n - i - 1; j++)
+            if (arr[j] > arr[j + 1])
+                swap(arr[j], arr[j + 1]);
 }
-
-void printArray(int arr[], int n)
+ 
+// Function to print an array
+void printArray(int arr[], int size)
 {
-	for (int i = 0; i < n; i++)
-		cout << arr[i] << " ";
+    int i;
+    for (i = 0; i < size; i++)
+        cout << arr[i] << " ";
+    cout << endl;
 }
-
+ 
+// Driver code
 int main()
 {
-	int arr[] = { 12, 34, 54, 2, 3 }, i;
-	int n = sizeof(arr) / sizeof(arr[0]);
-
-	cout << "Array before sorting: \n";
-	printArray(arr, n);
-
-	shellSort(arr, n);
-
-	cout << "\nArray after sorting: \n";
-	printArray(arr, n);
-
-	return 0;
+    int arr[] = { 5, 1, 4, 2, 8};
+    int N = sizeof(arr) / sizeof(arr[0]);
+    bubbleSort(arr, N);
+    cout << "Sorted array: \n";
+    printArray(arr, N);
+    return 0;
 }
