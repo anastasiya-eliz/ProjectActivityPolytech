@@ -1,43 +1,53 @@
-﻿// C++ implementation of Shell Sort
+﻿// C++ implementation not of Shell Sort but more coool
+#include "stdafx.h"
 #include <iostream>
+#include <ctime>
+#include <iomanip>
 using namespace std;
-
-int shellSort(int arr[], int n)
+ 
+void insertionSort(int *, int); // прототип функции сортировки вставками
+ 
+int main(int argc, char* argv[])
 {
-	for (int gap = n / 2; gap > 0; gap /= 2)
-	{
-		for (int i = gap; i < n; i += 1)
-		{
-			int temp = arr[i];
-			
-			int j;
-			for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
-				arr[j] = arr[j - gap];
-			
-			arr[j] = temp;
-		}
-	}
-	return 0;
+    srand(time(NULL));
+    setlocale(LC_ALL, "rus");
+    cout << "Введите размер массива: ";
+    int size_array; // длинна массива
+    cin >> size_array;
+ 
+    int *sorted_array = new int [size_array]; // одномерный динамический массив
+    for (int counter = 0; counter < size_array; counter++)
+    {
+        sorted_array[counter] = rand() % 100; // заполняем массив случайными числами
+        cout << setw(2) << sorted_array[counter] << "  "; // вывод массива на экран
+    }
+    cout << "n";
+ 
+    insertionSort(sorted_array, size_array); // вызов функции сортировки вставками
+ 
+    for (int counter = 0; counter < size_array; counter++)
+    {
+        cout << setw(2) << sorted_array[counter] << "  "; // печать отсортированного массива
+    }
+    cout << "n";
+    delete [] sorted_array; // высвобождаем память
+    system("pause");
+    return 0;
 }
-
-void printArray(int arr[], int n)
+ 
+void insertionSort(int *arrayPtr, int length) // сортировка вставками
 {
-	for (int i = 0; i < n; i++)
-		cout << arr[i] << " ";
-}
-
-int main()
-{
-	int arr[] = { 12, 34, 54, 2, 3 }, i;
-	int n = sizeof(arr) / sizeof(arr[0]);
-
-	cout << "Array before sorting: \n";
-	printArray(arr, n);
-
-	shellSort(arr, n);
-
-	cout << "\nArray after sorting: \n";
-	printArray(arr, n);
-
-	return 0;
+    int temp, // временная переменная для хранения значения элемента сортируемого массива
+        item; // индекс предыдущего элемента
+    for (int counter = 1; counter < length; counter++)
+    {
+        temp = arrayPtr[counter]; // инициализируем временную переменную текущим значением элемента массива
+        item = counter-1; // запоминаем индекс предыдущего элемента массива
+        while(item >= 0 && arrayPtr[item] > temp) // пока индекс не равен 0 и предыдущий элемент массива больше текущего
+        {
+            arrayPtr[item + 1] = arrayPtr[item]; // перестановка элементов массива
+            arrayPtr[item] = temp;
+            item--;
+        }
+    }
 }
