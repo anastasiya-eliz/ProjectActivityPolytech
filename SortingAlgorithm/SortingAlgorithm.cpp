@@ -1,43 +1,32 @@
-﻿// C++ implementation of Shell Sort
-#include <iostream>
-using namespace std;
+﻿void qsortRecursive(int* mas, int size) {
+    int i = 0;
+    int j = size - 1;
 
-int shellSort(int arr[], int n)
-{
-	for (int gap = n / 2; gap > 0; gap /= 2)
-	{
-		for (int i = gap; i < n; i += 1)
-		{
-			int temp = arr[i];
-			
-			int j;
-			for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
-				arr[j] = arr[j - gap];
-			
-			arr[j] = temp;
-		}
-	}
-	return 0;
-}
+    int mid = mas[size / 2];
 
-void printArray(int arr[], int n)
-{
-	for (int i = 0; i < n; i++)
-		cout << arr[i] << " ";
-}
+    do {
+        while (mas[i] < mid) {
+            i++;
+        }
+        while (mas[j] > mid) {
+            j--;
+        }
+        
+        if (i <= j) {
+            int tmp = mas[i];
+            mas[i] = mas[j];
+            mas[j] = tmp;
 
-int main()
-{
-	int arr[] = { 12, 34, 54, 2, 3 }, i;
-	int n = sizeof(arr) / sizeof(arr[0]);
+            i++;
+            j--;
+        }
+    } while (i <= j);
 
-	cout << "Array before sorting: \n";
-	printArray(arr, n);
-
-	shellSort(arr, n);
-
-	cout << "\nArray after sorting: \n";
-	printArray(arr, n);
-
-	return 0;
+    
+    if (j > 0) {
+        qsortRecursive(mas, j + 1);
+    }
+    if (i < size) {
+        qsortRecursive(&mas[i], size - i);
+    }
 }
